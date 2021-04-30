@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-export default function Movie({ title, year, image }) {
+export default function Movie({ title, year, image, addToNominations }) {
   return (
     <>
       <div className='relative'>
@@ -18,7 +18,10 @@ export default function Movie({ title, year, image }) {
           <div className='w-3/4 text-sm text-center'>
             {title} ({year})
           </div>
-          <button className='px-2 py-1 text-xs border border-red-500 rounded-lg'>
+          <button
+            className='px-2 py-1 text-xs border border-red-500 rounded-lg'
+            onClick={addToNominations}
+          >
             Nominate
           </button>
         </div>

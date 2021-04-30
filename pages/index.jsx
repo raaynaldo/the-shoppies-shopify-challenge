@@ -17,6 +17,10 @@ export default function Home() {
     );
   }, []);
 
+  useEffect(() => {
+    localStorage.setItem('nominations', JSON.stringify(nominations));
+  }, [nominations]);
+
   const fetchData = (event) => {
     event.preventDefault();
     axios
@@ -44,6 +48,16 @@ export default function Home() {
       });
   };
 
+  const addToNominations = (movie) => {
+    setNominations((prevNominations) => [...prevNominations, movie]);
+  };
+
+  const removeNominations = (movieId) => {
+    setNominations((prevNominations) => [
+      ...prevNominations.filter((movie) => movie.imdbID !== movieId),
+    ]);
+  };
+
   return (
     <>
       <NextSeo />
@@ -60,9 +74,12 @@ export default function Home() {
                 searchInput={searchInput}
                 setSearchInput={setSearchInput}
               />
-              <Results results={results} />
+              <Results results={results} addToNominations={addToNominations} />
             </div>
-            <Nominations />
+            <Nominations
+              nominations={nominations}
+              removeNominations={removeNominations}
+            />
           </div>
         </section>
       </main>
@@ -84,7 +101,7 @@ const Search = ({ searchInput, setSearchInput, fetchData }) => {
   );
 };
 
-const Results = ({ results }) => {
+const Results = ({ results, addToNominations }) => {
   return (
     <div className='grid grid-cols-2 gap-8 md:grid-cols-4 md:gap-10'>
       {results.data.map((result) => (
@@ -93,30 +110,29 @@ const Results = ({ results }) => {
           title={result.Title}
           year={result.Year}
           image={result.Poster}
+          addToNominations={() => addToNominations(result)}
         />
       ))}
     </div>
   );
 };
 
-const Nominations = () => {
+const Nominations = ({ nominations, removeNominations }) => {
   return (
     <div className='sticky flex-1 hidden p-3 space-y-3 bg-gray-100 rounded-md top-5 h-1/2 md:block'>
       <h4>Nominations</h4>
       <ul className='space-y-3'>
-        <li>
-          hello asdas asdas adsada asdas asdsadas sa as{' '}
-          <button className='border'>remove</button>
-        </li>
-        <li>
-          hello <button className='border'>remove</button>
-        </li>
-        <li>
-          hello <button className='border'>remove</button>
-        </li>
-        <li>
-          hello <button className='border'>remove</button>
-        </li>
+        {nominations.map((nomination) => (
+          <li key={`nomination-${nomination.imdbID}`}>
+            {nomination.Title} ({nomination.Year}){' '}
+            <button
+              className='border-2 border-black'
+              onClick={() => removeNominations(nomination.imdbID)}
+            >
+              Remove
+            </button>
+          </li>
+        ))}
       </ul>
     </div>
 
