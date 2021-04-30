@@ -1,8 +1,49 @@
+import { useState, useEffect } from 'react';
 import { NextSeo } from 'next-seo';
-import CustomLink from '@/components/CustomLink';
+import axios from 'axios';
 import Movie from '@/components/Movie';
 
 export default function Home() {
+  const [searchInput, setSearchInput] = useState('');
+  // const [loading, setLoading] = useState('false');
+  const [results, setResults] = useState({ searchInput: '', data: [] });
+  const [nominations, setNominations] = useState([]);
+
+  useEffect(() => {
+    setNominations(
+      window.localStorage.getItem('nominations')
+        ? JSON.parse(localStorage.getItem('nominations'))
+        : []
+    );
+  }, []);
+
+  const fetchData = (event) => {
+    event.preventDefault();
+    axios
+      .get(`?s=${searchInput}`)
+      .then((response) => {
+        // add a new attribute to check if the movie has been nominated
+        const data = response.data.Search.map((movie) => {
+          const newMovie = {
+            ...movie,
+            isNominated: nominations.some(
+              (nomination) => nomination.imdbID === movie.imdbID
+            ),
+          };
+
+          return newMovie;
+        });
+        console.log(data);
+        setResults({
+          searchInput: searchInput,
+          data: data,
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
   return (
     <>
       <NextSeo />
@@ -14,8 +55,12 @@ export default function Home() {
               <div className=''>
                 <h3>The Shoppies</h3>
               </div>
-              <Search />
-              <Results />
+              <Search
+                fetchData={fetchData}
+                searchInput={searchInput}
+                setSearchInput={setSearchInput}
+              />
+              <Results results={results} />
             </div>
             <Nominations />
           </div>
@@ -25,29 +70,31 @@ export default function Home() {
   );
 }
 
-const Search = () => {
+const Search = ({ searchInput, setSearchInput, fetchData }) => {
   return (
-    <div className=''>
+    <form onSubmit={(e) => fetchData(e)}>
       <input
         type='text'
         className='w-full border-gray-300 rounded-xl'
-        placeholder='Search Movie'
+        placeholder='Search Movie Title'
+        value={searchInput}
+        onChange={(e) => setSearchInput(e.target.value)}
       />
-    </div>
+    </form>
   );
 };
 
-const Results = () => {
+const Results = ({ results }) => {
   return (
     <div className='grid grid-cols-2 gap-8 md:grid-cols-4 md:gap-10'>
-      <Movie />
-      <Movie />
-      <Movie />
-      <Movie />
-      <Movie />
-      <Movie />
-      <Movie />
-      <Movie />
+      {results.data.map((result) => (
+        <Movie
+          key={`result-${result.imdbID}`}
+          title={result.Title}
+          year={result.Year}
+          image={result.Poster}
+        />
+      ))}
     </div>
   );
 };
