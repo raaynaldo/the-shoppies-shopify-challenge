@@ -99,13 +99,9 @@ const Results = ({ results }) => {
   );
 };
 
-// const Nominations = () => {
-//   return <div className='fixed bottom-0 right-0 w-1/6 bg-red-300 h-1/2'></div>;
-// };
-
 const Nominations = () => {
   return (
-    <div className='flex-1 hidden p-3 space-y-3 bg-gray-100 rounded-md h-1/2 md:block'>
+    <div className='sticky flex-1 hidden p-3 space-y-3 bg-gray-100 rounded-md top-5 h-1/2 md:block'>
       <h4>Nominations</h4>
       <ul className='space-y-3'>
         <li>
