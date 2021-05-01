@@ -34,6 +34,18 @@ export default function Movie({
             Nominate
           </button>
         </div>
+
+        <div className='absolute top-0 right-0 md:hidden'>
+          <button
+            className={`btn-nominate ${
+              isNominated ? 'cursor-not-allowed' : ''
+            }`}
+            onClick={addNominationHandler}
+            disabled={isNominated}
+          >
+            +
+          </button>
+        </div>
       </div>
     </>
   );
