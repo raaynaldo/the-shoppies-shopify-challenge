@@ -117,7 +117,7 @@ export default function Home() {
 
       <main>
         <section className='bg-white'>
-          <div className='flex flex-col items-center min-h-screen py-5 space-y-10 layout'>
+          <div className='flex flex-col items-center min-h-screen py-5 space-y-10 layout lg:items-start'>
             <div className='flex flex-col w-full space-y-5 md:w-3/4'>
               <div className=''>
                 <h3>The Shoppies</h3>
@@ -211,7 +211,7 @@ const Results = ({
 
 const Nominations = ({ nominations, removeNominationHandler }) => {
   return (
-    <div className='w-full p-3 space-y-3 bg-gray-100 rounded-md'>
+    <div className='w-full p-3 space-y-3 bg-gray-100 rounded-md lg:fixed lg:w-1/4 lg:right-5 lg:bottom-5'>
       <h4 className='inline'>Nominations</h4>
       <span> (up to 5)</span>
       <ul className='space-y-3'>
