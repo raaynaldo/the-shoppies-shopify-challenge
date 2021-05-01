@@ -118,7 +118,7 @@ export default function Home() {
       <main>
         <section className='bg-white'>
           <div className='flex justify-center min-h-screen py-5 space-x-5 layout'>
-            <div className='flex flex-col w-3/4 space-y-5'>
+            <div className='flex flex-col w-full space-y-5 md:w-3/4'>
               <div className=''>
                 <h3>The Shoppies</h3>
               </div>
