@@ -120,9 +120,7 @@ export default function Home() {
         <section className='bg-white'>
           <div className='flex flex-col items-center min-h-screen py-5 space-y-10 layout lg:items-start'>
             <div className='flex flex-col w-full space-y-5 lg:w-3/4'>
-              <div className=''>
-                <h3>The Shoppies</h3>
-              </div>
+              <h3>The Shoppies</h3>
               <Search
                 searchHandler={searchHandler}
                 searchInput={searchInput}
@@ -151,10 +149,10 @@ export default function Home() {
 const Search = ({ searchInput, setSearchInput, searchHandler }) => {
   return (
     <form onSubmit={(e) => searchHandler(e)}>
+      <label>Search movie title then hit enter ...</label>
       <input
         type='text'
         className='w-full border-gray-300 rounded-xl'
-        placeholder='Search Movie Title'
         value={searchInput}
         onChange={(e) => setSearchInput(e.target.value)}
       />
