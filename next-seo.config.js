@@ -8,12 +8,13 @@ const SEO = {
   openGraph: {
     type: 'website',
     locale: 'en_IE',
-    url: 'https://theodorusclarence.com',
+    url: 'https://the-shoppies-shopify-challenge.vercel.app/',
     title,
     description,
     images: [
       {
-        url: 'https://theodorusclarence.com/favicon/ms-icon-144x144.png',
+        url:
+          'https://the-shoppies-shopify-challenge.vercel.app/favicon/ms-icon-144x144.png',
         alt: title,
         width: 144,
         height: 144,
