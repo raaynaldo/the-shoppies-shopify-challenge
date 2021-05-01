@@ -60,7 +60,9 @@ export default function Home() {
   };
 
   const addToNominations = (movie) => {
-    setNominations((prevNominations) => [...prevNominations, movie]);
+    if (nominations.length < 5) {
+      setNominations((prevNominations) => [...prevNominations, movie]);
+    }
   };
 
   const removeNominations = (movieId) => {
@@ -138,7 +140,7 @@ const Nominations = ({ nominations, removeNominations }) => {
           <li key={`nomination-${nomination.imdbID}`}>
             {nomination.Title} ({nomination.Year}){' '}
             <button
-              className='border-2 border-black'
+              className='btn-nominate'
               onClick={() => removeNominations(nomination.imdbID)}
             >
               Remove
