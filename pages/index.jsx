@@ -39,8 +39,12 @@ export default function Home() {
     });
   }, [nominations]);
 
-  const fetchData = (event, currentPage = 1) => {
+  const searchHandler = (event) => {
     event.preventDefault();
+    fetchData(1);
+  };
+
+  const fetchData = (currentPage) => {
     axios
       .get(`?s=${searchInput}&type=movie&page=${currentPage}`)
       .then((response) => {
@@ -66,7 +70,7 @@ export default function Home() {
       });
   };
 
-  const addToNominations = (movie) => {
+  const addNominationHandler = (movie) => {
     if (nominations.length < 5) {
       if (nominations.length === 4) {
         toast.info('You have five nominations now!', {
@@ -93,10 +97,18 @@ export default function Home() {
     }
   };
 
-  const removeNominations = (movieId) => {
+  const removeNominationHandler = (movieId) => {
     setNominations((prevNominations) => [
       ...prevNominations.filter((movie) => movie.imdbID !== movieId),
     ]);
+  };
+
+  const nextPageHandler = () => {
+    fetchData(currentPage + 1);
+  };
+
+  const prevPageHandler = () => {
+    fetchData(currentPage - 1);
   };
 
   return (
@@ -111,20 +123,22 @@ export default function Home() {
                 <h3>The Shoppies</h3>
               </div>
               <Search
-                fetchData={fetchData}
+                searchHandler={searchHandler}
                 searchInput={searchInput}
                 setSearchInput={setSearchInput}
               />
               <Results
                 results={results}
-                addToNominations={addToNominations}
+                addNominationHandler={addNominationHandler}
                 currentPage={currentPage}
                 maxPage={maxPage}
+                prevPageHandler={prevPageHandler}
+                nextPageHandler={nextPageHandler}
               />
             </div>
             <Nominations
               nominations={nominations}
-              removeNominations={removeNominations}
+              removeNominationHandler={removeNominationHandler}
             />
           </div>
         </section>
@@ -133,9 +147,9 @@ export default function Home() {
   );
 }
 
-const Search = ({ searchInput, setSearchInput, fetchData }) => {
+const Search = ({ searchInput, setSearchInput, searchHandler }) => {
   return (
-    <form onSubmit={(e) => fetchData(e)}>
+    <form onSubmit={(e) => searchHandler(e)}>
       <input
         type='text'
         className='w-full border-gray-300 rounded-xl'
@@ -147,25 +161,33 @@ const Search = ({ searchInput, setSearchInput, fetchData }) => {
   );
 };
 
-const Results = ({ results, addToNominations, currentPage, maxPage }) => {
+const Results = ({
+  results,
+  addNominationHandler,
+  currentPage,
+  maxPage,
+  prevPageHandler,
+  nextPageHandler,
+}) => {
   if (results.length === 0) return null;
-
   return (
     <>
-      <div className='flex flex-col items-center'>
+      <div className='flex flex-col items-center space-y-2'>
         <div>
           Page: {currentPage} / {maxPage}
         </div>
         <div className='flex w-full space-x-2'>
           <button
-            className='flex-auto bg-gray-200 border rounded-md hover:bg-gray-400 disabled:opacity-50'
+            className='flex-auto py-1 bg-gray-200 border rounded-md hover:bg-gray-400 disabled:opacity-50'
             disabled={currentPage === 1}
+            onClick={prevPageHandler}
           >
             prev
           </button>
           <button
-            className='flex-auto bg-gray-200 border rounded-md hover:bg-gray-400 disabled:opacity-50'
+            className='flex-auto py-1 bg-gray-200 border rounded-md hover:bg-gray-400 disabled:opacity-50'
             disabled={currentPage === maxPage}
+            onClick={nextPageHandler}
           >
             next
           </button>
@@ -178,7 +200,7 @@ const Results = ({ results, addToNominations, currentPage, maxPage }) => {
             title={result.Title}
             year={result.Year}
             image={result.Poster}
-            addToNominations={() => addToNominations(result)}
+            addNominationHandler={() => addNominationHandler(result)}
             isNominated={result.isNominated}
           />
         ))}
@@ -187,7 +209,7 @@ const Results = ({ results, addToNominations, currentPage, maxPage }) => {
   );
 };
 
-const Nominations = ({ nominations, removeNominations }) => {
+const Nominations = ({ nominations, removeNominationHandler }) => {
   return (
     <div className='sticky flex-1 hidden p-3 space-y-3 bg-gray-100 rounded-md mt-28 top-5 h-1/2 md:block'>
       <h4 className='inline'>Nominations</h4>
@@ -198,7 +220,7 @@ const Nominations = ({ nominations, removeNominations }) => {
             {nomination.Title} ({nomination.Year}){' '}
             <button
               className='btn-nominate'
-              onClick={() => removeNominations(nomination.imdbID)}
+              onClick={() => removeNominationHandler(nomination.imdbID)}
             >
               Remove
             </button>

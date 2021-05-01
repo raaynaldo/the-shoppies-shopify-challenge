@@ -4,7 +4,7 @@ export default function Movie({
   title,
   year,
   image,
-  addToNominations,
+  addNominationHandler,
   isNominated,
 }) {
   return (
@@ -28,7 +28,7 @@ export default function Movie({
             className={`btn-nominate ${
               isNominated ? 'cursor-not-allowed' : ''
             }`}
-            onClick={addToNominations}
+            onClick={addNominationHandler}
             disabled={isNominated}
           >
             Nominate
