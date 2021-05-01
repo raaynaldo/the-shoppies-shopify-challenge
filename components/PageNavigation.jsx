@@ -11,14 +11,14 @@ export default function PageNavigation({
       </div>
       <div className='flex w-full space-x-2'>
         <button
-          className='flex-auto py-1 bg-gray-200 border rounded-md hover:bg-gray-400 disabled:opacity-50'
+          className='flex-auto py-1 bg-gray-200 border rounded-md hover:bg-gray-400 disabled:opacity-50 focus:outline-none focus:ring focus:ring-blue-500'
           disabled={currentPage === 1}
           onClick={prevPageHandler}
         >
           prev
         </button>
         <button
-          className='flex-auto py-1 bg-gray-200 border rounded-md hover:bg-gray-400 disabled:opacity-50'
+          className='flex-auto py-1 bg-gray-200 border rounded-md hover:bg-gray-400 disabled:opacity-50 focus:outline-none focus:ring focus:ring-blue-500'
           disabled={currentPage === maxPage}
           onClick={nextPageHandler}
         >
