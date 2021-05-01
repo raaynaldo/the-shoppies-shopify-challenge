@@ -4,7 +4,9 @@ import axios from 'axios';
 import Movie from '@/components/Movie';
 import PageNavigation from '@/components/PageNavigation';
 import { toast } from 'react-toastify';
+import Loader from 'react-loader-spinner';
 
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function Home() {
@@ -173,7 +175,12 @@ const Results = ({
   nextPageHandler,
   loading,
 }) => {
-  if (loading) return 'Loading...';
+  if (loading)
+    return (
+      <div className='m-auto mt-10'>
+        <Loader type='TailSpin' color='#60a5fa' height={100} width={100} />
+      </div>
+    );
   if (results.length === 0) return null;
   return (
     <>
