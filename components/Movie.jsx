@@ -26,12 +26,14 @@ export default function Movie({
           </div>
           <button
             className={`btn-nominate ${
-              isNominated ? 'cursor-not-allowed' : ''
+              isNominated
+                ? 'cursor-not-allowed bg-gray-400 hover:bg-gray-700'
+                : 'bg-blue-400 hover:bg-blue-700'
             }`}
             onClick={addNominationHandler}
             disabled={isNominated}
           >
-            Nominate
+            {isNominated ? 'Nominated' : 'Nominate'}
           </button>
         </div>
 
