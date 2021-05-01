@@ -25,18 +25,15 @@ export default function Home() {
   useEffect(() => {
     localStorage.setItem('nominations', JSON.stringify(nominations));
 
-    setResults((prevResults) => {
-      const newData = results.map((movie) => {
-        return {
-          ...movie,
-          isNominated: nominations.some(
-            (nomination) => nomination.imdbID === movie.imdbID
-          ),
-        };
-      });
-
-      return newData;
+    const newData = results.map((movie) => {
+      return {
+        ...movie,
+        isNominated: nominations.some(
+          (nomination) => nomination.imdbID === movie.imdbID
+        ),
+      };
     });
+    setResults(newData);
   }, [nominations]);
 
   const searchHandler = (event) => {
@@ -213,17 +210,15 @@ const Nominations = ({ nominations, removeNominationHandler }) => {
   return (
     <div className='w-full p-3 space-y-3 bg-gray-100 rounded-md lg:fixed lg:w-1/4 lg:right-5 lg:bottom-5'>
       <h4 className='inline'>Nominations</h4>
-      <span> (up to 5)</span>
+      <span className='text-xs italic'> (up to 5) (Click to remove)</span>
       <ul className='space-y-3'>
         {nominations.map((nomination) => (
-          <li key={`nomination-${nomination.imdbID}`}>
+          <li
+            key={`nomination-${nomination.imdbID}`}
+            onClick={() => removeNominationHandler(nomination.imdbID)}
+            className='cursor-pointer hover:line-through hover:text-red-600'
+          >
             {nomination.Title} ({nomination.Year}){' '}
-            <button
-              className='btn-nominate'
-              onClick={() => removeNominationHandler(nomination.imdbID)}
-            >
-              Remove
-            </button>
           </li>
         ))}
       </ul>
