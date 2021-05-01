@@ -68,6 +68,7 @@ export default function Home() {
           setMaxPage(Math.ceil(response.data.totalResults / 10));
           setCurrentPage(currentPage);
         } else {
+          setResults([]);
           toast.error(`Sorry, ${response.data.Error}`, {
             position: 'top-right',
             autoClose: 3000,
