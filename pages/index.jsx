@@ -115,7 +115,7 @@ export default function Home() {
       <main>
         <section className='bg-white'>
           <div className='flex flex-col items-center min-h-screen py-5 space-y-10 layout lg:items-start'>
-            <div className='flex flex-col w-full space-y-5 md:w-3/4'>
+            <div className='flex flex-col w-full space-y-5 lg:w-3/4'>
               <div className=''>
                 <h3>The Shoppies</h3>
               </div>

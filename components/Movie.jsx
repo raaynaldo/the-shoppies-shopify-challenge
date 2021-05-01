@@ -35,7 +35,7 @@ export default function Movie({
           </button>
         </div>
 
-        <div className='absolute top-0 right-0 md:hidden'>
+        <div className='absolute top-0 right-0 lg:hidden'>
           <button
             className={`btn-nominate ${
               isNominated ? 'cursor-not-allowed' : ''
