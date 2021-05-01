@@ -27,7 +27,7 @@ export default function Movie({
           <button
             className={`btn-nominate ${
               isNominated
-                ? 'cursor-not-allowed bg-gray-400 hover:bg-gray-700'
+                ? 'cursor-not-allowed bg-gray-400 hover:bg-gray-400'
                 : 'bg-blue-400 hover:bg-blue-700'
             }`}
             onClick={addNominationHandler}
