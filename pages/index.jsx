@@ -18,9 +18,12 @@ export default function Home() {
         ? JSON.parse(localStorage.getItem('nominations'))
         : []
     );
+    console.log('abis load');
   }, []);
 
   useEffect(() => {
+    console.log(nominations);
+    console.log('abis ganti');
     localStorage.setItem('nominations', JSON.stringify(nominations));
 
     setResults((prevResults) => {
@@ -66,9 +69,20 @@ export default function Home() {
 
   const addToNominations = (movie) => {
     if (nominations.length < 5) {
+      if (nominations.length === 4) {
+        toast.info('You have five nominations now!', {
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
       setNominations((prevNominations) => [...prevNominations, movie]);
     } else {
-      toast.error('Sorry, You already have 5 nominations!', {
+      toast.error('Sorry, You already have five nominations!', {
         position: 'top-right',
         autoClose: 3000,
         hideProgressBar: false,
