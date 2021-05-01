@@ -144,7 +144,7 @@ export default function Home() {
         <section className='bg-white'>
           <div className='flex flex-col items-center min-h-screen py-5 space-y-10 layout lg:items-start'>
             <div className='flex flex-col w-full space-y-5 lg:w-3/4'>
-              <div className='flex items-center justify-center space-x-2'>
+              <div className='flex items-center justify-center space-x-2 lg:justify-start'>
                 <figure className='overflow-hidden w-7'>
                   <Image
                     src='/images/logo.png'
