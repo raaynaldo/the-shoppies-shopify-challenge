@@ -10,7 +10,8 @@ export default function Home() {
   const [searchInput, setSearchInput] = useState('');
   // const [loading, setLoading] = useState('false');
   const [results, setResults] = useState([]);
-  const [page, setPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [maxPage, setMaxPage] = useState(0);
   const [nominations, setNominations] = useState([]);
 
   useEffect(() => {
@@ -19,12 +20,9 @@ export default function Home() {
         ? JSON.parse(localStorage.getItem('nominations'))
         : []
     );
-    console.log('abis load');
   }, []);
 
   useEffect(() => {
-    console.log(nominations);
-    console.log('abis ganti');
     localStorage.setItem('nominations', JSON.stringify(nominations));
 
     setResults((prevResults) => {
@@ -41,10 +39,10 @@ export default function Home() {
     });
   }, [nominations]);
 
-  const fetchData = (event) => {
+  const fetchData = (event, currentPage = 1) => {
     event.preventDefault();
     axios
-      .get(`?s=${searchInput}&type=movie`)
+      .get(`?s=${searchInput}&type=movie&page=${currentPage}`)
       .then((response) => {
         // add a new attribute to check if the movie has been nominated
         const data = response.data.Search.map((movie) => {
@@ -57,6 +55,9 @@ export default function Home() {
 
           return newMovie;
         });
+
+        setMaxPage(Math.ceil(response.data.totalResults / 10));
+        setCurrentPage(currentPage);
         console.log(data);
         setResults(data);
       })
@@ -114,7 +115,12 @@ export default function Home() {
                 searchInput={searchInput}
                 setSearchInput={setSearchInput}
               />
-              <Results results={results} addToNominations={addToNominations} />
+              <Results
+                results={results}
+                addToNominations={addToNominations}
+                currentPage={currentPage}
+                maxPage={maxPage}
+              />
             </div>
             <Nominations
               nominations={nominations}
@@ -141,19 +147,26 @@ const Search = ({ searchInput, setSearchInput, fetchData }) => {
   );
 };
 
-const Results = ({ results, addToNominations }) => {
-  console.log(results);
-  // if (results.length !== 0) return null;
+const Results = ({ results, addToNominations, currentPage, maxPage }) => {
+  if (results.length === 0) return null;
 
   return (
     <>
       <div className='flex flex-col items-center'>
-        <div>Page: 1 / 3</div>
+        <div>
+          Page: {currentPage} / {maxPage}
+        </div>
         <div className='flex w-full space-x-2'>
-          <button className='flex-auto bg-gray-200 border rounded-md hover:bg-gray-400'>
+          <button
+            className='flex-auto bg-gray-200 border rounded-md hover:bg-gray-400 disabled:opacity-50'
+            disabled={currentPage === 1}
+          >
             prev
           </button>
-          <button className='flex-auto bg-gray-200 border rounded-md hover:bg-gray-400'>
+          <button
+            className='flex-auto bg-gray-200 border rounded-md hover:bg-gray-400 disabled:opacity-50'
+            disabled={currentPage === maxPage}
+          >
             next
           </button>
         </div>
