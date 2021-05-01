@@ -5,6 +5,7 @@ import Movie from '@/components/Movie';
 import PageNavigation from '@/components/PageNavigation';
 import { toast } from 'react-toastify';
 import Loader from 'react-loader-spinner';
+import Image from 'next/image';
 
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import 'react-toastify/dist/ReactToastify.css';
@@ -143,7 +144,18 @@ export default function Home() {
         <section className='bg-white'>
           <div className='flex flex-col items-center min-h-screen py-5 space-y-10 layout lg:items-start'>
             <div className='flex flex-col w-full space-y-5 lg:w-3/4'>
-              <h3>The Shoppies</h3>
+              <div className='flex items-center justify-center space-x-2'>
+                <figure className='overflow-hidden w-7'>
+                  <Image
+                    src='/images/logo.png'
+                    alt='logo'
+                    width={200}
+                    height={200}
+                    layout='responsive'
+                  />
+                </figure>
+                <h2>The Shoppies</h2>
+              </div>
               <Search
                 searchHandler={searchHandler}
                 searchInput={searchInput}

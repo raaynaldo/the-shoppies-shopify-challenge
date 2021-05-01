@@ -13,7 +13,7 @@ export default function Movie({
         <figure className='overflow-hidden rounded-lg shadow-xl'>
           <Image
             src={image !== 'N/A' ? image : '/images/no-poster.png'}
-            alt='Spiderman'
+            alt={title}
             width={300}
             height={440}
             layout='responsive'
