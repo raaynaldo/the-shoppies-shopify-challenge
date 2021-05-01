@@ -50,26 +50,43 @@ export default function Home() {
       .get(`?s=${searchInput}&type=movie&page=${currentPage}`)
       .then((response) => {
         // add a new attribute to check if the movie has been nominated
-        const data = response.data.Search.map((movie) => {
-          const newMovie = {
-            ...movie,
-            isNominated: nominations.some(
-              (nomination) => nomination.imdbID === movie.imdbID
-            ),
-          };
+        if (response.Response === 'True') {
+          const data = response.data.Search.map((movie) => {
+            const newMovie = {
+              ...movie,
+              isNominated: nominations.some(
+                (nomination) => nomination.imdbID === movie.imdbID
+              ),
+            };
 
-          return newMovie;
-        });
-        console.log(data);
-        data.pop();
-        setResults(data);
+            return newMovie;
+          });
+          console.log(data);
+          data.pop();
+          setResults(data);
 
-        setMaxPage(Math.ceil(response.data.totalResults / 10));
-        setCurrentPage(currentPage);
+          setMaxPage(Math.ceil(response.data.totalResults / 10));
+          setCurrentPage(currentPage);
+        } else {
+          toast.error(`Sorry, ${response.data.Error}`, {
+            position: 'top-right',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            progress: undefined,
+          });
+        }
         setLoading(false);
       })
       .catch(function (error) {
-        console.log(error);
+        setLoading(false);
+        toast.error(`${error}`, {
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          progress: undefined,
+        });
       });
   };
 
