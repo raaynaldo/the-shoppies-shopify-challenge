@@ -9,7 +9,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export default function Home() {
   const [searchInput, setSearchInput] = useState('');
-  // const [loading, setLoading] = useState('false');
   const [results, setResults] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [maxPage, setMaxPage] = useState(0);
@@ -70,14 +69,19 @@ export default function Home() {
 
   const addNominationHandler = (movie) => {
     if (nominations.length < 5) {
+      toast.success(`${movie.Title} (${movie.Year}) is nominated`, {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        progress: undefined,
+      });
       if (nominations.length === 4) {
         toast.info('You have five nominations now!', {
           position: 'top-right',
           autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
           progress: undefined,
         });
       }
@@ -88,8 +92,6 @@ export default function Home() {
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
         progress: undefined,
       });
     }
@@ -177,9 +179,9 @@ const Results = ({
         nextPageHandler={nextPageHandler}
       />
       <div className='grid grid-cols-2 gap-8 md:grid-cols-3 md:gap-10'>
-        {results.map((result) => (
+        {results.map((result, index) => (
           <Movie
-            key={`result-${result.imdbID}`}
+            key={`result-${index}`}
             title={result.Title}
             year={result.Year}
             image={result.Poster}
