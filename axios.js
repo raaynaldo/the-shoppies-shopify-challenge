@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const instance = () => {
   const { NEXT_PUBLIC_OMDB_API_KEY } = process.env;
-  axios.defaults.baseURL = `http://www.omdbapi.com/`;
+  axios.defaults.baseURL = `https://www.omdbapi.com/`;
   axios.defaults.params = {};
   axios.defaults.params['apikey'] = NEXT_PUBLIC_OMDB_API_KEY;
 
