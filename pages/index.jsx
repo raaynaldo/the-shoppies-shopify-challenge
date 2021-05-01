@@ -56,11 +56,12 @@ export default function Home() {
 
           return newMovie;
         });
+        console.log(data);
+        data.pop();
+        setResults(data);
 
         setMaxPage(Math.ceil(response.data.totalResults / 10));
         setCurrentPage(currentPage);
-        console.log(data);
-        setResults(data);
       })
       .catch(function (error) {
         console.log(error);
