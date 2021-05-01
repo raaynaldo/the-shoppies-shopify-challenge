@@ -12,7 +12,7 @@ export default function Movie({
       <div className='relative'>
         <figure className='overflow-hidden rounded-lg shadow-xl'>
           <Image
-            src={image !== 'N/A' ? image : '/images/no-poster.jpg'}
+            src={image !== 'N/A' ? image : '/images/no-poster.png'}
             alt='Spiderman'
             width={300}
             height={440}
