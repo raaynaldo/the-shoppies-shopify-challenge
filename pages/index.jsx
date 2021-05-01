@@ -117,7 +117,7 @@ export default function Home() {
 
       <main>
         <section className='bg-white'>
-          <div className='flex justify-center min-h-screen py-5 space-x-5 layout'>
+          <div className='flex flex-col items-center min-h-screen py-5 space-y-10 layout'>
             <div className='flex flex-col w-full space-y-5 md:w-3/4'>
               <div className=''>
                 <h3>The Shoppies</h3>
@@ -126,6 +126,10 @@ export default function Home() {
                 searchHandler={searchHandler}
                 searchInput={searchInput}
                 setSearchInput={setSearchInput}
+              />
+              <Nominations
+                nominations={nominations}
+                removeNominationHandler={removeNominationHandler}
               />
               <Results
                 results={results}
@@ -136,10 +140,6 @@ export default function Home() {
                 nextPageHandler={nextPageHandler}
               />
             </div>
-            <Nominations
-              nominations={nominations}
-              removeNominationHandler={removeNominationHandler}
-            />
           </div>
         </section>
       </main>
@@ -211,7 +211,7 @@ const Results = ({
 
 const Nominations = ({ nominations, removeNominationHandler }) => {
   return (
-    <div className='sticky flex-1 hidden p-3 space-y-3 bg-gray-100 rounded-md mt-28 top-5 h-1/2 md:block'>
+    <div className='w-full p-3 space-y-3 bg-gray-100 rounded-md'>
       <h4 className='inline'>Nominations</h4>
       <span> (up to 5)</span>
       <ul className='space-y-3'>
