@@ -2,6 +2,7 @@ import { DefaultSeo } from 'next-seo';
 import SEO from '@/next-seo.config';
 import '@/styles/globals.css';
 import axios from '@/axios';
+import { ToastContainer } from 'react-toastify';
 
 function MyApp({ Component, pageProps }) {
   axios();
@@ -9,6 +10,7 @@ function MyApp({ Component, pageProps }) {
     <>
       <DefaultSeo {...SEO} />
       <Component {...pageProps} />
+      <ToastContainer />
     </>
   );
 }

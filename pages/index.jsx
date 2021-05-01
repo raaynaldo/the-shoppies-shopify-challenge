@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react';
 import { NextSeo } from 'next-seo';
 import axios from 'axios';
 import Movie from '@/components/Movie';
+import { toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Home() {
   const [searchInput, setSearchInput] = useState('');
@@ -19,15 +22,17 @@ export default function Home() {
 
   useEffect(() => {
     localStorage.setItem('nominations', JSON.stringify(nominations));
-    const newData = results.data.map((movie) => {
-      return {
-        ...movie,
-        isNominated: nominations.some(
-          (nomination) => nomination.imdbID === movie.imdbID
-        ),
-      };
-    });
+
     setResults((prevResults) => {
+      const newData = results.data.map((movie) => {
+        return {
+          ...movie,
+          isNominated: nominations.some(
+            (nomination) => nomination.imdbID === movie.imdbID
+          ),
+        };
+      });
+
       return { ...prevResults.searchInput, data: newData };
     });
   }, [nominations]);
@@ -62,6 +67,16 @@ export default function Home() {
   const addToNominations = (movie) => {
     if (nominations.length < 5) {
       setNominations((prevNominations) => [...prevNominations, movie]);
+    } else {
+      toast.error('Sorry, You already have 5 nominations!', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   };
 
@@ -134,7 +149,8 @@ const Results = ({ results, addToNominations }) => {
 const Nominations = ({ nominations, removeNominations }) => {
   return (
     <div className='sticky flex-1 hidden p-3 space-y-3 bg-gray-100 rounded-md top-20 h-1/2 md:block'>
-      <h4>Nominations</h4>
+      <h4 className='inline'>Nominations</h4>
+      <span> (up to 5)</span>
       <ul className='space-y-3'>
         {nominations.map((nomination) => (
           <li key={`nomination-${nomination.imdbID}`}>
