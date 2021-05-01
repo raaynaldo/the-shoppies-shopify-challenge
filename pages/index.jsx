@@ -223,15 +223,5 @@ const Nominations = ({ nominations, removeNominationHandler }) => {
         ))}
       </ul>
     </div>
-
-    // <div className='fixed bottom-0 left-0 w-full p-3 space-y-3 bg-gray-100 rounded-md h-1/4 md:block'>
-    //   <h4>Nominations</h4>
-    //   <ul className='space-y-3'>
-    //     <li>hello asdas asdas adsada asdas asdsadas sa as</li>
-    //     <li>hello</li>
-    //     <li>hello</li>
-    //     <li>hello</li>
-    //   </ul>
-    // </div>
   );
 };
