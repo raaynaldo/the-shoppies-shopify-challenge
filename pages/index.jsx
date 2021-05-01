@@ -131,7 +131,7 @@ const Search = ({ searchInput, setSearchInput, fetchData }) => {
 
 const Results = ({ results, addToNominations }) => {
   return (
-    <div className='grid grid-cols-2 gap-8 md:grid-cols-4 md:gap-10'>
+    <div className='grid grid-cols-2 gap-8 md:grid-cols-3 md:gap-10'>
       {results.data.map((result) => (
         <Movie
           key={`result-${result.imdbID}`}
@@ -148,7 +148,7 @@ const Results = ({ results, addToNominations }) => {
 
 const Nominations = ({ nominations, removeNominations }) => {
   return (
-    <div className='sticky flex-1 hidden p-3 space-y-3 bg-gray-100 rounded-md top-20 h-1/2 md:block'>
+    <div className='sticky flex-1 hidden p-3 space-y-3 bg-gray-100 rounded-md mt-28 top-5 h-1/2 md:block'>
       <h4 className='inline'>Nominations</h4>
       <span> (up to 5)</span>
       <ul className='space-y-3'>
