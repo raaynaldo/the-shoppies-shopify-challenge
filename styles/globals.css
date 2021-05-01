@@ -62,4 +62,8 @@
     max-width: 68.75rem;
     @apply w-11/12 mx-auto;
   }
+
+  .btn-nominate {
+    @apply px-2 py-1 text-xs text-gray-100 bg-blue-500 rounded-md disabled:opacity-50;
+  }
 }

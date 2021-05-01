@@ -1,12 +1,18 @@
 import Image from 'next/image';
 
-export default function Movie({ title, year, image, addToNominations }) {
+export default function Movie({
+  title,
+  year,
+  image,
+  addToNominations,
+  isNominated,
+}) {
   return (
     <>
       <div className='relative'>
         <figure className='overflow-hidden rounded-lg shadow-xl'>
           <Image
-            src={image}
+            src={image !== 'N/A' ? image : '/images/no-poster.jpg'}
             alt='Spiderman'
             width={300}
             height={440}
@@ -19,8 +25,11 @@ export default function Movie({ title, year, image, addToNominations }) {
             {title} ({year})
           </div>
           <button
-            className='px-2 py-1 text-xs border border-red-500 rounded-lg'
+            className={`btn-nominate ${
+              isNominated ? 'cursor-not-allowed' : ''
+            }`}
             onClick={addToNominations}
+            disabled={isNominated}
           >
             Nominate
           </button>

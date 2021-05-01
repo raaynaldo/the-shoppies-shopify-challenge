@@ -19,6 +19,17 @@ export default function Home() {
 
   useEffect(() => {
     localStorage.setItem('nominations', JSON.stringify(nominations));
+    const newData = results.data.map((movie) => {
+      return {
+        ...movie,
+        isNominated: nominations.some(
+          (nomination) => nomination.imdbID === movie.imdbID
+        ),
+      };
+    });
+    setResults((prevResults) => {
+      return { ...prevResults.searchInput, data: newData };
+    });
   }, [nominations]);
 
   const fetchData = (event) => {
@@ -111,6 +122,7 @@ const Results = ({ results, addToNominations }) => {
           year={result.Year}
           image={result.Poster}
           addToNominations={() => addToNominations(result)}
+          isNominated={result.isNominated}
         />
       ))}
     </div>
@@ -119,7 +131,7 @@ const Results = ({ results, addToNominations }) => {
 
 const Nominations = ({ nominations, removeNominations }) => {
   return (
-    <div className='sticky flex-1 hidden p-3 space-y-3 bg-gray-100 rounded-md top-5 h-1/2 md:block'>
+    <div className='sticky flex-1 hidden p-3 space-y-3 bg-gray-100 rounded-md top-20 h-1/2 md:block'>
       <h4>Nominations</h4>
       <ul className='space-y-3'>
         {nominations.map((nomination) => (
