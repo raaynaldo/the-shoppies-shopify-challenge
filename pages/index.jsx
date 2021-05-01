@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { NextSeo } from 'next-seo';
 import axios from 'axios';
 import Movie from '@/components/Movie';
+import PageNavigation from '@/components/PageNavigation';
 import { toast } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
@@ -169,27 +170,12 @@ const Results = ({
   if (results.length === 0) return null;
   return (
     <>
-      <div className='flex flex-col items-center space-y-2'>
-        <div>
-          Page: {currentPage} / {maxPage}
-        </div>
-        <div className='flex w-full space-x-2'>
-          <button
-            className='flex-auto py-1 bg-gray-200 border rounded-md hover:bg-gray-400 disabled:opacity-50'
-            disabled={currentPage === 1}
-            onClick={prevPageHandler}
-          >
-            prev
-          </button>
-          <button
-            className='flex-auto py-1 bg-gray-200 border rounded-md hover:bg-gray-400 disabled:opacity-50'
-            disabled={currentPage === maxPage}
-            onClick={nextPageHandler}
-          >
-            next
-          </button>
-        </div>
-      </div>
+      <PageNavigation
+        currentPage={currentPage}
+        maxPage={maxPage}
+        prevPageHandler={prevPageHandler}
+        nextPageHandler={nextPageHandler}
+      />
       <div className='grid grid-cols-2 gap-8 md:grid-cols-3 md:gap-10'>
         {results.map((result) => (
           <Movie
@@ -202,6 +188,12 @@ const Results = ({
           />
         ))}
       </div>
+      <PageNavigation
+        currentPage={currentPage}
+        maxPage={maxPage}
+        prevPageHandler={prevPageHandler}
+        nextPageHandler={nextPageHandler}
+      />
     </>
   );
 };
