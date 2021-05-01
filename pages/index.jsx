@@ -35,7 +35,7 @@ export default function Home() {
   const fetchData = (event) => {
     event.preventDefault();
     axios
-      .get(`?s=${searchInput}`)
+      .get(`?s=${searchInput}&type=movie`)
       .then((response) => {
         // add a new attribute to check if the movie has been nominated
         const data = response.data.Search.map((movie) => {
