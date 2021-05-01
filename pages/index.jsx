@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 export default function Home() {
   const [searchInput, setSearchInput] = useState('');
   const [results, setResults] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [maxPage, setMaxPage] = useState(0);
   const [nominations, setNominations] = useState([]);
@@ -42,6 +43,7 @@ export default function Home() {
   };
 
   const fetchData = (currentPage) => {
+    setLoading(true);
     axios
       .get(`?s=${searchInput}&type=movie&page=${currentPage}`)
       .then((response) => {
@@ -62,6 +64,7 @@ export default function Home() {
 
         setMaxPage(Math.ceil(response.data.totalResults / 10));
         setCurrentPage(currentPage);
+        setLoading(false);
       })
       .catch(function (error) {
         console.log(error);
@@ -137,6 +140,7 @@ export default function Home() {
                 maxPage={maxPage}
                 prevPageHandler={prevPageHandler}
                 nextPageHandler={nextPageHandler}
+                loading={loading}
               />
             </div>
           </div>
@@ -167,7 +171,9 @@ const Results = ({
   maxPage,
   prevPageHandler,
   nextPageHandler,
+  loading,
 }) => {
+  if (loading) return 'Loading...';
   if (results.length === 0) return null;
   return (
     <>
