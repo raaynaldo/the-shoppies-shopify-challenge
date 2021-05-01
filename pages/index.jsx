@@ -9,7 +9,8 @@ import 'react-toastify/dist/ReactToastify.css';
 export default function Home() {
   const [searchInput, setSearchInput] = useState('');
   // const [loading, setLoading] = useState('false');
-  const [results, setResults] = useState({ searchInput: '', data: [] });
+  const [results, setResults] = useState([]);
+  const [page, setPage] = useState(1);
   const [nominations, setNominations] = useState([]);
 
   useEffect(() => {
@@ -27,7 +28,7 @@ export default function Home() {
     localStorage.setItem('nominations', JSON.stringify(nominations));
 
     setResults((prevResults) => {
-      const newData = results.data.map((movie) => {
+      const newData = results.map((movie) => {
         return {
           ...movie,
           isNominated: nominations.some(
@@ -36,7 +37,7 @@ export default function Home() {
         };
       });
 
-      return { ...prevResults.searchInput, data: newData };
+      return newData;
     });
   }, [nominations]);
 
@@ -57,10 +58,7 @@ export default function Home() {
           return newMovie;
         });
         console.log(data);
-        setResults({
-          searchInput: searchInput,
-          data: data,
-        });
+        setResults(data);
       })
       .catch(function (error) {
         console.log(error);
@@ -144,19 +142,35 @@ const Search = ({ searchInput, setSearchInput, fetchData }) => {
 };
 
 const Results = ({ results, addToNominations }) => {
+  console.log(results);
+  // if (results.length !== 0) return null;
+
   return (
-    <div className='grid grid-cols-2 gap-8 md:grid-cols-3 md:gap-10'>
-      {results.data.map((result) => (
-        <Movie
-          key={`result-${result.imdbID}`}
-          title={result.Title}
-          year={result.Year}
-          image={result.Poster}
-          addToNominations={() => addToNominations(result)}
-          isNominated={result.isNominated}
-        />
-      ))}
-    </div>
+    <>
+      <div className='flex flex-col items-center'>
+        <div>Page: 1 / 3</div>
+        <div className='flex w-full space-x-2'>
+          <button className='flex-auto bg-gray-200 border rounded-md hover:bg-gray-400'>
+            prev
+          </button>
+          <button className='flex-auto bg-gray-200 border rounded-md hover:bg-gray-400'>
+            next
+          </button>
+        </div>
+      </div>
+      <div className='grid grid-cols-2 gap-8 md:grid-cols-3 md:gap-10'>
+        {results.map((result) => (
+          <Movie
+            key={`result-${result.imdbID}`}
+            title={result.Title}
+            year={result.Year}
+            image={result.Poster}
+            addToNominations={() => addToNominations(result)}
+            isNominated={result.isNominated}
+          />
+        ))}
+      </div>
+    </>
   );
 };
 
