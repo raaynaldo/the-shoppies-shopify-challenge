@@ -50,7 +50,7 @@ export default function Home() {
       .get(`?s=${searchInput}&type=movie&page=${currentPage}`)
       .then((response) => {
         // add a new attribute to check if the movie has been nominated
-        if (response.Response === 'True') {
+        if (response.data.Response === 'True') {
           const data = response.data.Search.map((movie) => {
             const newMovie = {
               ...movie,
