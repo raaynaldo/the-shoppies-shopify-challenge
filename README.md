@@ -42,4 +42,4 @@ Finally, run the server,
 yarn run dev
 ```
 
-and open (http://localhost:3000)[http://localhost:3000] with your browser.
+and open [http://localhost:3000](http://localhost:3000) with your browser.
