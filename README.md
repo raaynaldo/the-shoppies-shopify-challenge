@@ -20,8 +20,22 @@ Technical requirements
 - If a search result has already been nominated, disable its nominate button.
 - Display a banner when the user has 5 nominations.
 
+## Preview
 
-## Prerequisites
+
+### Dekstop View
+
+![image](https://user-images.githubusercontent.com/22878284/116953439-3f5d1b80-ac5b-11eb-9581-ac87415de665.png)
+
+### Ipad View
+
+![image](https://user-images.githubusercontent.com/22878284/116953583-a37fdf80-ac5b-11eb-84de-2160249c96d8.png)
+
+### Mobile View
+
+![image](https://user-images.githubusercontent.com/22878284/116953547-9236d300-ac5b-11eb-921f-612699d4023d.png)
+
+### Prerequisites
 
 The Shoppies was built by Next.js and Tailwind CSS
 
