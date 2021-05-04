@@ -21,7 +21,7 @@ Technical requirements
 - Display a banner when the user has 5 nominations.
 
 ## Preview
-
+![image](preview.gif)
 
 ### Dekstop View
 
