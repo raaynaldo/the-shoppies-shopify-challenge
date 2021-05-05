@@ -63,7 +63,7 @@ export default function Home() {
             return newMovie;
           });
           console.log(data);
-          data.pop();
+          // if (currentPage !== maxPage) data.pop();
           setResults(data);
 
           setMaxPage(Math.ceil(response.data.totalResults / 10));
